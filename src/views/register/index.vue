@@ -3,13 +3,13 @@
         <el-form :label-position="labelPosition" label-width="80px" class="login-form" :model="formLabelAlign">
 
             <div class="title-container">
-                <h3 class="title">登陆律链</h3>
+                <h3 class="title">注册律链</h3>
                 <!-- <lang-select class="set-language"/> -->
             </div>
 
             <el-form-item prop="username">
-                <span class="svg-container svg-container_login">
-                    <svg-icon icon-class="user" />
+                <span class="svg-container">
+                    <svg-icon icon-class="phone" />
                 </span>
                 <el-input
                 v-model="loginForm.username"
@@ -22,24 +22,24 @@
 
             <el-form-item prop="password">
                 <span class="svg-container">
-                    <svg-icon icon-class="password" />
+                    <svg-icon icon-class="phone_message" />
                 </span>
                 <el-input
                 v-model="loginForm.password"
                 :placeholder="login.password"
-                name="password"
+                name="verification"
                 :type="passwordType"
                 auto-complete="on"
                 @keyup.enter.native="handleLogin"
                 />
-                <span class="show-pwd" @click="showPwd">
-                    <svg-icon icon-class="eye" />
+                <span class="verification" @click="verificationHandle">
+                    接收短信验证码
                 </span>
             </el-form-item>
 
-            <el-button class="thirdparty-button" type="primary" @click="handleLogin">{{ '登陆' }}</el-button>
+            <el-button class="thirdparty-button" type="primary" @click="handleLogin">{{ '注册' }}</el-button>
             <div class="tips">
-                <span>还没有账号，点击<router-link to="/register">注册</router-link></span>
+                <span>已有账号？点击<router-link to="/login">登陆</router-link></span>
             </div>
             <el-dialog :title="login.thirdparty" :visible.sync="showDialog" append-to-body>
                  还没有账号 ？
@@ -57,7 +57,7 @@ export default {
     return {
       login: {
         name: 'placeholder',
-        password: 'password',
+        password: '请输入6位短信验证码',
         thirdparty: 'aa'
       },
       loginForm: {
@@ -72,14 +72,14 @@ export default {
       },
       loading: false,
       showDialog: false,
-      passwordType: 'password'
+      passwordType: 'verification'
     }
   },
   methods: {
     handleLogin () {
       console.log('login')
     },
-    showPwd () {
+    verificationHandle () {
       console.log('click')
     }
   }
@@ -188,14 +188,13 @@ export default {
             right: 0px;
             }
         }
-        .show-pwd {
+        .verification {
             position: absolute;
             right: 10px;
             top: 7px;
             font-size: 16px;
-            color: $dark_gray;
+            color: #409EFF;
             cursor: pointer;
-            user-select: none;
         }
         .thirdparty-button {
             margin-left: 0px;
