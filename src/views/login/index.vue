@@ -1,6 +1,6 @@
 <template>
     <div class="login-container">
-        <el-form :label-position="labelPosition" label-width="80px" class="login-form" :model="formLabelAlign">
+        <el-form ref="loginForm" :label-position="labelPosition" label-width="80px" class="login-form" :model="formLabelAlign">
 
             <div class="title-container">
                 <h3 class="title">登陆律链</h3>
@@ -39,26 +39,39 @@
 
             <el-button class="thirdparty-button" type="primary" @click="handleLogin">{{ '登陆' }}</el-button>
             <div class="tips">
-                <span>还没有账号，点击<router-link to="/register">注册</router-link></span>
+                <span>还没有账号? 点击<router-link to="/register">注册</router-link></span>
             </div>
-            <el-dialog :title="login.thirdparty" :visible.sync="showDialog" append-to-body>
-                 还没有账号 ？
-                <br>
-                <br>
-            </el-dialog>
-
         </el-form>
     </div>
 </template>
 <script>
+import { isvalidUsername } from '@/utils/validate'
 export default {
   name: 'Login',
   data () {
+    const validateUsername = (rule, value, callback) => {
+      if (!isvalidUsername(value)) {
+        callback(new Error('Please enter the correct user name'))
+      } else {
+        callback()
+      }
+    }
+    const validatePassword = (rule, value, callback) => {
+      if (value.length < 6) {
+        callback(new Error('The password can not be less than 6 digits'))
+      } else {
+        callback()
+      }
+    }
     return {
       login: {
         name: 'placeholder',
         password: 'password',
         thirdparty: 'aa'
+      },
+      loginRules: {
+        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       loginForm: {
         username: 'admin',
@@ -77,7 +90,13 @@ export default {
   },
   methods: {
     handleLogin () {
-      console.log('login')
+      this.$refs.loginForm.validate(valid => {
+        if (valid) {
+          this.loading = true
+          console.log(this.$store)
+        }
+        console.log(this.$refs.loginForm)
+      })
     },
     showPwd () {
       console.log('click')

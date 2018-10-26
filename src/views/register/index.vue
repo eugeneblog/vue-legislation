@@ -13,7 +13,7 @@
                 </span>
                 <el-input
                 v-model="loginForm.username"
-                :placeholder="login.username"
+                :placeholder="register.name"
                 name="username"
                 type="text"
                 auto-complete="on"
@@ -26,7 +26,7 @@
                 </span>
                 <el-input
                 v-model="loginForm.password"
-                :placeholder="login.password"
+                :placeholder="register.verification"
                 name="verification"
                 :type="passwordType"
                 auto-complete="on"
@@ -41,12 +41,6 @@
             <div class="tips">
                 <span>已有账号？点击<router-link to="/login">登陆</router-link></span>
             </div>
-            <el-dialog :title="login.thirdparty" :visible.sync="showDialog" append-to-body>
-                 还没有账号 ？
-                <br>
-                <br>
-            </el-dialog>
-
         </el-form>
     </div>
 </template>
@@ -55,18 +49,18 @@ export default {
   name: 'Login',
   data () {
     return {
-      login: {
-        name: 'placeholder',
-        password: '请输入6位短信验证码',
+      register: {
+        name: '请输入11位手机号码',
+        verification: '请输入6位短信验证码',
         thirdparty: 'aa'
       },
       loginForm: {
-        username: 'admin',
-        password: '123456'
+        username: '',
+        verification: ''
       },
       labelPosition: 'right',
       formLabelAlign: {
-        name: 'admin',
+        name: '',
         region: '',
         type: ''
       },
