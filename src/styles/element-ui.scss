@@ -85,3 +85,50 @@
 .el-form-item__content {
   margin-left: 0px !important;
 }
+.el-menu--horizontal {
+  & > .headerBox {
+    & > .el-menu-item {
+      float: left;
+      height: 60px;
+      line-height: 60px;
+      margin: 0;
+      border-bottom: 2px solid transparent;
+      color: #909399;
+      &.is-active {
+        border-bottom: 2px solid #409eff;
+        color: #303133;
+      }
+    }
+    & > .el-submenu {
+      float: left;
+    }
+  }
+  .el-submenu {
+    .el-submenu__icon-arrow {
+      position: static;
+      vertical-align: middle;
+      margin-left: 8px;
+      margin-top: -3px;
+    }
+    & > .el-submenu__title {
+      height: 60px !important;
+      line-height: 60px !important;
+      border-bottom: 2px solid transparent;
+      color: #909399;
+    }
+    & > .el-submenu {
+      height: 60px !important;
+      line-height: 60px !important;
+      border-bottom: 2px solid transparent;
+      color: #909399;
+    }
+  }
+}
+.el-menu--horizontal .el-menu .el-menu-item, .el-menu--horizontal .el-menu .el-submenu__title {
+  background-color: #fff;
+  float: none !important;
+  height: 36px !important;
+  line-height: 36px !important;
+  padding: 0 10px !important;
+  color: #909399;
+}

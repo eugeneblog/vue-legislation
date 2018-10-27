@@ -93,9 +93,16 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          console.log(this.$store)
+          this.$store.dispatch('LoginByUserName', this.loginForm).then(() => {
+            this.loading = false
+            this.$router.push('/dashboard/foo')
+          }).catch(() => {
+            this.loading = false
+          })
+        } else {
+          console.log('error submit!!')
+          return false
         }
-        console.log(this.$refs.loginForm)
       })
     },
     showPwd () {

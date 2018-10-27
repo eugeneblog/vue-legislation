@@ -14,6 +14,7 @@ import '@/styles/index.scss'
 import $ from 'jquery'
 import 'fullcalendar'
 import 'fullcalendar/dist/fullcalendar.css'
+import './mock'
 
 import './icons'
 
