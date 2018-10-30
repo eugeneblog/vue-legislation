@@ -5,6 +5,7 @@ export function loginByUserName (username, password) {
     username,
     password
   }
+  console.log(`发送post请求，验证${data.username}用户数据是否正确`)
   return request({
     url: '/login/login',
     method: 'post',

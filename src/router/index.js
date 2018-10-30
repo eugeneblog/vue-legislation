@@ -25,6 +25,10 @@ export const constantRouterMap = [
       path: 'perennial', // 常年
       name: 'Perennial',
       component: () => import('@/views/perennial/Perennial')
+    }, {
+      path: 'setting',
+      name: 'Setting',
+      component: () => import('@/views/setting/Setting')
     }]
   },
   {

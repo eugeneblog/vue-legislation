@@ -1,6 +1,6 @@
 <template>
     <div class="login-container">
-        <el-form ref="loginForm" :label-position="labelPosition" label-width="80px" class="login-form" :model="formLabelAlign">
+        <el-form ref="loginForm" :rules="loginRules" :label-position="labelPosition" label-width="80px" class="login-form" :model="loginForm">
 
             <div class="title-container">
                 <h3 class="title">登陆律链</h3>
@@ -30,14 +30,13 @@
                 name="password"
                 :type="passwordType"
                 auto-complete="on"
-                @keyup.enter.native="handleLogin"
                 />
                 <span class="show-pwd" @click="showPwd">
                     <svg-icon icon-class="eye" />
                 </span>
             </el-form-item>
 
-            <el-button class="thirdparty-button" type="primary" @click="handleLogin">{{ '登陆' }}</el-button>
+            <el-button :loading = 'loading' class="thirdparty-button" type="primary" @click.native.prevent="handleLogin">{{ '登陆' }}</el-button>
             <div class="tips">
                 <span>还没有账号? 点击<router-link to="/register">注册</router-link></span>
             </div>
@@ -66,8 +65,7 @@ export default {
     return {
       login: {
         name: 'placeholder',
-        password: 'password',
-        thirdparty: 'aa'
+        password: 'password'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -78,11 +76,6 @@ export default {
         password: '123456'
       },
       labelPosition: 'right',
-      formLabelAlign: {
-        name: 'admin',
-        region: '',
-        type: ''
-      },
       loading: false,
       showDialog: false,
       passwordType: 'password'
@@ -95,7 +88,7 @@ export default {
           this.loading = true
           this.$store.dispatch('LoginByUserName', this.loginForm).then(() => {
             this.loading = false
-            this.$router.push('/dashboard/foo')
+            this.$router.push('/dashboard/foo/calenDar')
           }).catch(() => {
             this.loading = false
           })

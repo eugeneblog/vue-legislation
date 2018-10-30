@@ -1,43 +1,43 @@
 <template>
     <div class="login-container">
-        <el-form :label-position="labelPosition" label-width="80px" class="login-form" :model="formLabelAlign">
+        <el-form ref="registerFrom" :label-position="labelPosition" label-width="80px" class="login-form" :model="registerFrom" :rules="registerRules" auto-complete="on">
 
             <div class="title-container">
                 <h3 class="title">注册律链</h3>
                 <!-- <lang-select class="set-language"/> -->
             </div>
 
-            <el-form-item prop="username">
+            <el-form-item prop="phone">
                 <span class="svg-container">
                     <svg-icon icon-class="phone" />
                 </span>
                 <el-input
-                v-model="loginForm.username"
+                v-model="registerFrom.phone"
                 :placeholder="register.name"
-                name="username"
+                @keyup.native="inputDownHandle($event)"
+                name="phone"
                 type="text"
                 auto-complete="on"
                 />
             </el-form-item>
 
-            <el-form-item prop="password">
+            <el-form-item>
                 <span class="svg-container">
                     <svg-icon icon-class="phone_message" />
                 </span>
                 <el-input
-                v-model="loginForm.password"
+                v-model="registerFrom.password"
                 :placeholder="register.verification"
                 name="verification"
-                :type="passwordType"
                 auto-complete="on"
-                @keyup.enter.native="handleLogin"
+                @keyup.enter.native="handleRegister"
                 />
                 <span class="verification" @click="verificationHandle">
                     接收短信验证码
                 </span>
             </el-form-item>
 
-            <el-button class="thirdparty-button" type="primary" @click="handleLogin">{{ '注册' }}</el-button>
+            <el-button :loading = 'loading' class="thirdparty-button" type="primary" @click.native.prevent="handleRegister">{{ '注册' }}</el-button>
             <div class="tips">
                 <span>已有账号？点击<router-link to="/login">登陆</router-link></span>
             </div>
@@ -45,36 +45,58 @@
     </div>
 </template>
 <script>
+import { isvalidPhone } from '@/utils/validate'
+import { verificationIsCorrect } from '@/api/register'
 export default {
   name: 'Login',
   data () {
+    const validatePhone = (rule, value, callback) => {
+      if (!isvalidPhone(value)) {
+        callback(new Error('请输入正确的手机号码'))
+      } else {
+        callback()
+      }
+    }
     return {
       register: {
         name: '请输入11位手机号码',
-        verification: '请输入6位短信验证码',
-        thirdparty: 'aa'
+        verification: '请输入6位短信验证码'
       },
-      loginForm: {
-        username: '',
+      registerRules: {
+        phone: [{ required: true, trigger: 'blur', validator: validatePhone }]
+      },
+      registerFrom: {
+        phone: '',
         verification: ''
       },
       labelPosition: 'right',
-      formLabelAlign: {
-        name: '',
-        region: '',
-        type: ''
-      },
-      loading: false,
-      showDialog: false,
-      passwordType: 'verification'
+      loading: false
     }
   },
   methods: {
-    handleLogin () {
-      console.log('login')
+    handleRegister () {
+      this.$refs.registerFrom.validate(valid => {
+        if (valid) {
+          console.log('正则验证')
+          this.loading = false
+        } else {
+          return false
+        }
+      })
     },
     verificationHandle () {
-      console.log('click')
+      return new Promise((resolve, reject) => {
+        verificationIsCorrect(this.registerFrom).then(response => {
+          const data = response.data
+          console.log('发送验证码的回调数据', data)
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+    inputDownHandle (e) {
+      console.log(this.registerFrom.phone)
     }
   }
 }

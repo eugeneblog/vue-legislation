@@ -25,6 +25,12 @@ export function validateAlphabets (str) {
   return reg.test(str)
 }
 
+/* 手机号吗 */
+export function isvalidPhone (str) {
+  const reg = /^1[3|4|5|8|7][0-9]\d{4,8}$/
+  return reg.test(str)
+}
+
 /**
    * validate email
    * @param email

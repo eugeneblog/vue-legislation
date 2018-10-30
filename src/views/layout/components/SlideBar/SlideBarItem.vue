@@ -11,25 +11,8 @@
 <script>
 export default {
   name: 'SlideBarItem',
-  data () {
-    return {
-      list: [{
-        id: '1',
-        text: '日程安排'
-      }, {
-        id: '2',
-        text: '诉讼项目'
-      }, {
-        id: '3',
-        text: '专项业务'
-      }, {
-        id: '4',
-        text: '常年顾问'
-      }, {
-        id: '5',
-        text: '管理中心'
-      }]
-    }
+  props: {
+    list: Array
   },
   methods: {
     itemClickHand (key, keyPath) {
@@ -40,9 +23,15 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" >
 .headerBox {
   width: 1200px;
   margin: 0 auto;
 }
+.el-menu-item:hover {
+  background: none;
+}
+// .is-active {
+
+// }
 </style>

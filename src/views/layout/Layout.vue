@@ -14,7 +14,7 @@ export default {
     AppMain
   },
   mounted () {
-    console.log(this.$store.state.app)
+    // console.log(this.$store.state.app)
   }
 }
 </script>
