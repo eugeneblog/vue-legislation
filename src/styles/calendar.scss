@@ -1,0 +1,30 @@
+.fc-bg {
+    table {
+        tbody {
+            .fc-day {
+                cursor: pointer;
+                &:hover {
+                  background: #EDF5FF;
+                }
+                &:active {
+                  background: #EDF5FF;
+                }
+            }
+        }
+    }
+}
+.fc-content-skeleton {
+    cursor: pointer;
+    table {
+        tbody {
+            tr {
+                td {
+                    cursor: pointer;
+                    &:hover{
+                        opacity: .8;
+                    }
+                }
+            }
+        }
+    }
+}

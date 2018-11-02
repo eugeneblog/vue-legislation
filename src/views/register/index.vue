@@ -26,15 +26,15 @@
                     <svg-icon icon-class="phone_message" />
                 </span>
                 <el-input
-                v-model="registerFrom.password"
+                v-model="registerFrom.verification"
                 :placeholder="register.verification"
                 name="verification"
                 auto-complete="on"
                 @keyup.enter.native="handleRegister"
                 />
-                <span class="verification" @click="verificationHandle">
-                    接收短信验证码
-                </span>
+                <el-button type="text" class="verification" @click="verificationHandle" :disabled = 'registerFrom.verSendSuccess'>
+                   {{ verificationMessage }}
+                </el-button>
             </el-form-item>
 
             <el-button :loading = 'loading' class="thirdparty-button" type="primary" @click.native.prevent="handleRegister">{{ '注册' }}</el-button>
@@ -65,12 +65,15 @@ export default {
       registerRules: {
         phone: [{ required: true, trigger: 'blur', validator: validatePhone }]
       },
+      verificationMessage: '获取验证码',
       registerFrom: {
         phone: '',
-        verification: ''
+        verification: '',
+        verSendSuccess: false
       },
       labelPosition: 'right',
-      loading: false
+      loading: false,
+      count: 30
     }
   },
   methods: {
@@ -85,15 +88,36 @@ export default {
       })
     },
     verificationHandle () {
-      return new Promise((resolve, reject) => {
-        verificationIsCorrect(this.registerFrom).then(response => {
-          const data = response.data
-          console.log('发送验证码的回调数据', data)
-          resolve()
-        }).catch(error => {
-          reject(error)
-        })
+      this.$refs.registerFrom.validate(valid => {
+        if (valid) {
+          return new Promise((resolve, reject) => {
+            verificationIsCorrect(this.registerFrom).then(response => {
+              const data = response.data
+              if (data) {
+                console.log('请求成功，获取的验证码：', data)
+                this.setTime()
+              }
+              resolve()
+            }).catch(error => {
+              reject(error)
+            })
+          })
+        }
       })
+    },
+    setTime () {
+      if (!this.count) {
+        this.verificationMessage = '获取验证码'
+        this.registerFrom.verSendSuccess = false
+        this.count = 30
+      } else {
+        this.verificationMessage = '重新获取 ' + this.count
+        this.count--
+        this.registerFrom.verSendSuccess = true
+        setTimeout(() => {
+          this.setTime()
+        }, 1000)
+      }
     },
     inputDownHandle (e) {
       console.log(this.registerFrom.phone)
@@ -210,6 +234,7 @@ export default {
             top: 7px;
             font-size: 16px;
             color: #409EFF;
+            border: none !important;
             cursor: pointer;
         }
         .thirdparty-button {
