@@ -2,7 +2,7 @@
     <div class="calendar_box">
         <div class="calendar_main" id="calendar">
         </div>
-        <calen-dar-dialog :data = "fromData.showDevaultTime" :dialogTitle="dialogTitle" @done="handleDone" @confirm="handleConfirm" @close = 'handleClose' :dialogFormVisible = "dialogFormVisible"/>
+        <calen-dar-dialog :closeOrdel="isCreate ? String('取消') : String('删除')" :updateOrCreate="isCreate ? String('创建') : String('修改')" :data="fromData"  :dialogTit="dialogTitle" @done="handleDone" @confirm="handleConfirm" @close = 'handleClose' :dialogFormVisible = "dialogFormVisible"/>
     </div>
 </template>
 <script>
@@ -12,7 +12,9 @@ export default {
   data () {
     return {
       fromData: {
-        title: 'aa',
+        scheduleTitle: '',
+        context: '',
+        delivery: true,
         showDevaultTime: {
           startDay: new Date('2018-11-5'),
           endDay: new Date('2018-11-15'),
@@ -20,6 +22,7 @@ export default {
           endHour: '21:00'
         }
       },
+      isCreate: true,
       dialogTitle: '',
       dialogFormVisible: false
     }
@@ -32,76 +35,125 @@ export default {
       const fromData = this.fromData
       this.dialogFormVisible = true
       this.dialogTitle = title
+      this.fromData.scheduleTitle = data.scheduleTitle
+      this.fromData.context = data.context
       fromData.showDevaultTime.startDay = new Date(data.startDate)
       fromData.showDevaultTime.endDay = new Date(data.endDate || data.startDate)
-      console.log(data)
+      fromData.showDevaultTime.startHour = data.startHour
+      fromData.showDevaultTime.endHour = data.endHour
     },
-    sendTime (data) { // 向服务器发送修改日程的请求
-      console.log(data)
+    sendTime (method, data) { // 向服务器发送修改日程的请求
+      return this.$store.dispatch(method, data)
     },
     handleClose () {
+      const _this = this
+      if (!_this.isCreate) {
+        $('#calendar').fullCalendar('removeEvents', _this.event._id)
+      }
       this.done()
     },
     handleConfirm () { // dialog弹窗点击确认后触发的函数
-      this.sendTime()
+      if (this.isCreate) {
+        this.sendTime('addCalendar', this.fromData).then(response => {
+          this.createEvents(this.fromData)
+          this.$notify({
+            title: '消息',
+            message: `成功创建新的日程`
+          })
+        })
+      } else {
+        this.updateEvent(this.event)
+      }
       this.dialogFormVisible = false
+    },
+    createEvents (data) { // 创建eventSources
+      $('#calendar').fullCalendar('addEventSource', [{
+        title: data.scheduleTitle,
+        start: data.showDevaultTime.startDay,
+        end: data.showDevaultTime.endDay,
+        context: data.context,
+        backgroundColor: '66afe0'
+      }])
+    },
+    updateEvent (event) { // 修改eventSources
+      const from = this.fromData
+      event.title = from.scheduleTitle
+      event.start = $.fullCalendar.moment(this.fromData.showDevaultTime.startDay)
+      event.end = $.fullCalendar.moment(this.fromData.showDevaultTime.endDay)
+      event.backgroundColor = '#81b88b'
+      event.borderColor = '#81b88b'
+      event.context = from.context
+      $('#calendar').fullCalendar('updateEvent', event)
     },
     handleDone () {
       this.done()
     },
     done () {
       this.dialogFormVisible = false
+    },
+    dateConversion (time) { // 时间格式转换
+      return time.getFullYear() + '-' + (time.getMonth() + 1) + '-' + time.getDate()
+    },
+    timeConversion (time) {
+      return (time.hour() < 10 ? '0' + time.hour() : time.hour()) + ':' + (time.minute() === 0 ? time.minute() + '0' : time.minute())
     }
   },
   mounted () {
     const _this = this
-    // const view = $('#calendar').fullCalendar('getView')
+    // let fullCalendarView = $('#calendar').fullCalendar('getView')
     // console.log(view)
+    // fullCalendar 文档请查询 https://fullcalendar.io
     $('#calendar').fullCalendar({
       selectable: true, // 允许点击和拖动选择
       editable: true, // 可编辑
-      eventStartEditable: true,
+      eventLimit: true,
       eventDurationEditable: true,
-      dayClick: function (date, jsEvent, view, resourceObj) {
-        // console.log('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY)
-        _this.showDialog('创建日程', {
-          startDate: date.format(),
-          endDate: null
-        })
-      },
       dragOpacity: {
         agenda: 0.5,
         '': 0.6
       },
-      select: function (startDate, endDate, allDay, jsEvent, view) {
-        _this.showDialog('创建日程', {
-          startDate: startDate.format(),
-          endDate: endDate.format()
-        })
+      select: function (startDate, endDate, allDay, jsEvent) {
+        // 求剩下的天数
+        let start = startDate._d
+        let end = endDate._d
+        _this.isCreate = true
+        if (startDate._ambigTime && endDate._ambigTime) {
+          // 全时间段
+          return _this.showDialog('创建日程', {
+            startDate: _this.dateConversion(start),
+            endDate: _this.dateConversion(end),
+            startHour: '00:00',
+            endHour: '24:00'
+          })
+        } else {
+          return _this.showDialog('创建日程', {
+            startDate: _this.dateConversion(start),
+            endDate: _this.dateConversion(end),
+            startHour: _this.timeConversion(startDate),
+            endHour: _this.timeConversion(endDate)
+          })
+        }
       },
       eventClick: function (event, element) { // 点击event的回调
         // event.title = 'CLICK'
         // $('#calendar').fullCalendar('updateEvent', event)
-        // console.log(event)
+        console.log(event)
+        _this.event = event
+        _this.isCreate = false
         _this.showDialog('修改日程', {
-          startDate: event.start._i,
-          endDate: event.end ? event.end._i : null
+          startDate: event.start._d,
+          endDate: event.end ? event.end._d : null,
+          scheduleTitle: event.title,
+          context: event.context
         })
       },
       eventDrop: function (event, dayDelta, minuteDelta, allDay, revertFunc) {
         console.log('event拖动')
       },
       eventSources: [{
-        events: [{
-          title: 'event1',
-          start: '2018-11-01'
-        },
-        {
-          title: 'event2',
-          start: '2018-11-05',
-          end: '2018-11-07'
-        }]
+        events: _this.$store.state.calendar.events
       }],
+      nowIndicator: true,
       schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
       contentHeight: 600,
       customButtons: {
@@ -115,13 +167,15 @@ export default {
       header: {
         left: 'prev,next today myCustomButton',
         center: 'title',
-        right: 'month,agendaWeek,agendaDay'
+        right: 'month,agendaWeek'
       },
       views: {
         month: {
           titleFormat: 'YYYY - MM - DD'
         }
-      }
+      },
+      minTime: '08:00:00',
+      maxTime: '21:00:00'
     })
   }
 }
@@ -129,10 +183,10 @@ export default {
 
 <style lang="scss" scoped>
 .calendar_box {
-    .calendar_main {
-        margin: 20px 20px 20px 20px;
-        background: #ffffff;
-        padding: 20px 20px 20px 20px;
-    }
+  .calendar_main {
+    margin: 20px 20px 20px 20px;
+    background: #ffffff;
+    padding: 20px 20px 20px 20px;
+  }
 }
 </style>

@@ -1,12 +1,12 @@
 <template>
   <el-form class="calendar-from" ref="calendarFrom" :model="form" label-width="80px">
     <el-form-item label="日程标题" class="calendar-from-item">
-      <el-input placeholder="请输入日程标题" v-model="form.name"></el-input>
+      <el-input placeholder="请输入日程标题" v-model="data.scheduleTitle"></el-input>
     </el-form-item>
     <el-form-item label="开始时间">
       <el-col :span="14">
         <el-date-picker
-        v-model="data.startDay"
+        v-model="data.showDevaultTime.startDay"
         align="right"
         type="date"
         placeholder="选择开始日期"
@@ -15,13 +15,13 @@
       </el-col>
       <el-col class="line" :span="2">-</el-col>
       <el-col :span="8">
-        <el-time-select :disabled="form.delivery" :picker-options="form.options" placeholder="选择开始时间" v-model="data.startHour" style="width: 100%;"></el-time-select>
+        <el-time-select :disabled="data.delivery" :picker-options="form.options" placeholder="选择开始时间" v-model="isDelivery.startHour" style="width: 100%;"></el-time-select>
       </el-col>
     </el-form-item>
     <el-form-item label="结束时间">
       <el-col :span="14">
         <el-date-picker
-        v-model="data.endDay"
+        v-model="data.showDevaultTime.endDay"
         align="right"
         type="date"
         placeholder="选择结束日期"
@@ -30,17 +30,19 @@
       </el-col>
       <el-col class="line" :span="2">-</el-col>
       <el-col :span="8">
-        <el-time-select :disabled="form.delivery" :picker-options="form.options" placeholder="选择结束时间" v-model="data.endHour" style="width: 100%;"></el-time-select>
+        <el-time-select :disabled="data.delivery" :picker-options="form.options" placeholder="选择结束时间" v-model="isDelivery.endHour" style="width: 100%;"></el-time-select>
       </el-col>
     </el-form-item>
     <el-form-item label="全天">
-      <el-switch v-model="form.delivery"></el-switch>
+      <el-switch v-model="data.delivery"></el-switch>
     </el-form-item>
-    <el-form-item label="活动区域">
-      <el-select v-model="form.region" placeholder="请选择活动区域">
-        <el-option label="区域一" value="shanghai"></el-option>
-        <el-option label="区域二" value="beijing"></el-option>
-      </el-select>
+    <el-form-item label="活动内容">
+      <el-input
+        type="textarea"
+        :autosize="{ minRows: 4, maxRows: 4}"
+        placeholder="请输入内容"
+        v-model="data.context">
+      </el-input>
     </el-form-item>
   </el-form>
 </template>
@@ -54,14 +56,6 @@ export default {
   data () {
     return {
       form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: true,
-        type: [],
-        resource: '',
-        desc: '',
         options: {
           start: '00:00',
           step: '00:30',
@@ -92,6 +86,18 @@ export default {
             picker.$emit('pick', date)
           }
         }]
+      }
+    }
+  },
+  computed: {
+    isDelivery: function () {
+      if (this.data.delivery) {
+        return {
+          startHour: '00.00',
+          endHour: '24.00'
+        }
+      } else {
+        return this.data.showDevaultTime
       }
     }
   }
