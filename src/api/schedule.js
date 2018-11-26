@@ -10,3 +10,11 @@ export function addscheduleToServer (ver) {
     data
   })
 }
+
+export function delscheduleToServer (ver) {
+  return request({
+    url: '/calendar/delSchedule',
+    method: 'get',
+    params: { ver }
+  })
+}

@@ -130,3 +130,23 @@
   padding: 0 10px !important;
   color: #909399;
 }
+.el-menu--horizontal > .headerBox > .el-menu-item.is-active {
+  border-bottom: 1px solid white;
+  background: none;
+}
+.el-menu--horizontal > .headerBox > .el-menu-item.is-active::after {
+  content: '';
+  position: relative;
+  top: -3px;
+  display: block;
+  margin: 0 auto;
+  width: 20px;
+  height: 3px;
+  background: #409eff;
+}
+.el-menu.el-menu--horizontal {
+  border: none;
+}
+.el-menu--horizontal>.el-submenu.is-active .el-submenu__title {
+  border: none;
+}

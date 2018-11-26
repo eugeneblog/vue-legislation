@@ -10,6 +10,7 @@ const user = {
     avatar: '',
     introduction: '',
     roles: [],
+    schedules: {},
     setting: {
       articlePlatform: []
     }
@@ -38,6 +39,8 @@ const user = {
         loginByUserName(username, userInfo.password).then(response => {
           const data = response.data
           commit('SET_TOKEN', data.token)
+          commit('SET_NAME', data.name)
+          commit('SET_AVATAR', data.avatar)
           setToken(response.data.token)
           resolve()
         }).catch(error => {

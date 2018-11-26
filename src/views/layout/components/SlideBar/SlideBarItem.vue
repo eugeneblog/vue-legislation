@@ -11,13 +11,25 @@
 <script>
 export default {
   name: 'SlideBarItem',
+  data () {
+    return {
+      onlyOneChild: null
+    }
+  },
   props: {
-    list: Array
+    list: Array,
+    basePath: {
+      type: String,
+      default: ''
+    }
   },
   methods: {
     itemClickHand (key, keyPath) {
       console.log(key)
       console.log('change router')
+    },
+    resolvePath (routePath) {
+
     }
   }
 }

@@ -15,9 +15,6 @@ export default {
     key () {
       return this.$router.fullPath
     }
-  },
-  mounted () {
-    console.log(this.$router)
   }
 }
 </script>
@@ -25,10 +22,12 @@ export default {
 <style>
 .app-main {
   /*84 = navbar + tags-view = 50 +34 */
-  min-height: calc(100vh - 84px);
+  padding-top: 64px;
+  height: 100%;
   width: 100%;
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: scroll;
   background: #f0f0f0;
 }
 </style>

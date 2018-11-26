@@ -1,6 +1,6 @@
 <template>
     <div class="login-container">
-        <el-form ref="registerFrom" :label-position="labelPosition" label-width="80px" class="login-form" :model="registerFrom" :rules="registerRules" auto-complete="on">
+        <el-form ref="registerFrom" :label-position="labelPosition" class="login-form" :model="registerFrom" :rules="registerRules" auto-complete="on">
 
             <div class="title-container">
                 <h3 class="title">注册律链</h3>

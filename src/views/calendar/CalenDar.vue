@@ -48,7 +48,14 @@ export default {
     handleClose () {
       const _this = this
       if (!_this.isCreate) {
-        $('#calendar').fullCalendar('removeEvents', _this.event._id)
+        this.sendTime('removeSchedule', _this.event._id).then(response => {
+          $('#calendar').fullCalendar('removeEvents', _this.event._id)
+          this.$notify({
+            title: '消息',
+            message: `已删除一个日程`,
+            type: 'success'
+          })
+        })
       }
       this.done()
     },

@@ -1,24 +1,46 @@
 <template>
-    <el-scrollbar wrap-class="scrollbar-wrapper">
+    <el-scrollbar wrap-class="scrollbar-wrapper" class="navbar-wrapper">
+      <div class="navbar-menuBox">
+        <div class="navbar-logo">
+            <router-link to="/dashboard/foo/calenDar"><img src="../../../../assets/logo/logo@3x.png" alt="律链"></router-link>
+        </div>
         <el-menu
-        :default-active="activeIndex"
+        class="list-menu"
+        :default-active="select_navbar"
         mode="horizontal"
         @select="handleSelect"
         >
-            <SlideBarItem :list = "list"/>
+          <SlideBarItem :list = "list"/>
         </el-menu>
+        <el-menu
+        class="tool-menu"
+        :default-active="activeIndex"
+        mode="horizontal"
+        >
+          <el-submenu index="2-4" class="right-menu">
+              <template slot="title">
+                <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+              </template>
+              <router-link to="/dashboard/foo/setting">
+                <el-menu-item divided @select="handleLogOut" index="2-4-1">个人中心</el-menu-item>
+              </router-link>
+              <router-link to="/login">
+                <el-menu-item divided @select="handleLogOut" index="2-4-2">退出登陆</el-menu-item>
+              </router-link>
+          </el-submenu>
+        </el-menu>
+      </div>
     </el-scrollbar>
 </template>
 
 <script>
-// import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 import SlideBarItem from './SlideBarItem'
 export default {
   name: 'SlideBar',
   data () {
     return {
       activeIndex: '1',
-      activeIndex2: '1',
       list: [{
         id: '1',
         link: 'calenDar',
@@ -45,14 +67,71 @@ export default {
   components: {
     SlideBarItem
   },
+  computed: {
+    ...mapGetters([
+      'avatar',
+      'name',
+      'permission_routers',
+      'select_navbar'
+    ])
+  },
   methods: {
     handleSelect (key, keyPath) {
       const list = this.list
       this.$router.push(`/dashboard/foo/${list[key - 1].link}`)
+    },
+    handleLogOut (key, keyPath) {
+      this.$store.dispatch('LogOut').then(() => {
+        location.reload()// In order to re-instantiate the vue-router object to avoid bugs
+      })
     }
-  },
-  mounted () {
-    console.log(this.resolvePath)
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  // .list-menu{
+  //   float: left;
+  // }
+  .navbar-wrapper {
+      position: fixed;
+      width: 100%;
+      left: 0;
+      top: 0;
+      z-index: 1500;
+      background: #fff;
+    .navbar-menuBox {
+      background: #fff;
+      .navbar-logo {
+        a {
+          float: left;
+          margin-right: 20px;
+          img {
+            padding: 10px 0;
+            width: 100px;
+          }
+        }
+      }
+      margin: 0 auto;
+      height: 61px;
+      margin: 0 20px;
+      .list-menu {
+        float: left;
+      }
+      .tool-menu {
+        float: right;
+      }
+    }
+  }
+  .right-menu {
+    float: right;
+    .el-menu-item {
+      min-width: 100px;
+    }
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+    }
+  }
+</style>

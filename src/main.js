@@ -18,6 +18,7 @@ import 'fullcalendar-scheduler'
 import './mock'
 
 import './icons'
+import './permission'
 
 window.$ = $
 Vue.use(ElementUI, {
