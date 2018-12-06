@@ -1,5 +1,5 @@
 <template>
-    <div class="card_wrap">
+    <div @click="cardClickHandle(id)" class="card_wrap">
         <el-row :gutter="24">
             <el-col :span="24">
                 <el-card shadow="hover" class="card_items">
@@ -11,16 +11,16 @@
                             <h3>{{ title }}</h3>
                         </div>
                         <div class="card_section">
-                            <span>2018-3-4 08:43</span>
-                            <span>联系人 ：Mr.Zhang </span>
-                            <span>电话 ：1234567890</span>
+                            <span>{{ date }}</span>
+                            <span>联系人 ：{{ linkman }} </span>
+                            <span>电话 ：{{ phone }}</span>
                         </div>
                         <div class="card_text">
-                            <p>由于法律未明文规定赔偿权利人之间如何分配死亡赔偿金等问题。故实践中对死亡赔偿金的分配常常会因认识不一致引发争议……</p>
+                            <p>{{ context }}</p>
                         </div>
                         <div class="card_footer">
-                            <span>最新进展 ： 拍板了（完成）</span>
-                            <span>主办 ： 无</span>
+                            <span>最新进展 ： {{ evolve }}</span>
+                            <span>主办 ： {{ sponsor }}</span>
                         </div>
                     </div>
                 </el-card>
@@ -35,6 +35,20 @@ export default {
   props: {
     title: {
       type: String
+    },
+    id: '',
+    date: '',
+    linkman: '',
+    phone: '',
+    context: {
+      type: String
+    },
+    evolve: '',
+    sponsor: ''
+  },
+  methods: {
+    cardClickHandle (id) {
+      this.$emit('select', id)
     }
   }
 }

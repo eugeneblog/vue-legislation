@@ -1,4 +1,4 @@
-import { getLawsuitData } from '@/api/lawsuit.js'
+import { GetLawsuitData } from '@/api/lawsuit.js'
 import { getToken } from '@/utils/auth'
 
 let token = getToken()
@@ -10,10 +10,10 @@ const lawsuit = {
   actions: {
     getLawsuitData ({ commit, state }) {
       return new Promise((resolve, reject) => {
-        getLawsuitData(token).then(response => {
+        GetLawsuitData(token).then(response => {
           let data = response.data
           commit('SET_LAWSUITDATA', data)
-          resolve()
+          resolve(data)
         }).catch(error => {
           reject(error)
         })

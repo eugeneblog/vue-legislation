@@ -193,3 +193,15 @@ code {
 .multiselect--active {
   z-index: 1000 !important;
 }
+.box_wrap {
+  margin: 20px;
+}
+
+.custom-tree-node {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  padding-right: 8px;
+}

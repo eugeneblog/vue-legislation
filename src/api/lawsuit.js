@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function getLawsuitData (token) {
+export function GetLawsuitData (token) {
   const data = {
     token
   }

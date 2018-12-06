@@ -29,6 +29,9 @@ export const constantRouterMap = [
       path: 'setting',
       name: 'Setting',
       component: () => import('@/views/setting/Setting')
+    }, {
+      path: 'detail/:id',
+      component: () => import('@/views/detail/Detail')
     }]
   },
   {
