@@ -8,11 +8,13 @@
                             <detail-menu></detail-menu>
                         </el-col>
                         <el-col :span="18">
-                            <detail-collapse></detail-collapse>
+                            <detail-collapse :collapseData="taskDetail"></detail-collapse>
                         </el-col>
                     </el-container>
                 </el-tab-pane>
-                <el-tab-pane label="案情" name="second">案情</el-tab-pane>
+                <el-tab-pane label="案情" name="second">
+                    <detail-collapse></detail-collapse>
+                </el-tab-pane>
                 <el-tab-pane label="文件" name="third">文件</el-tab-pane>
             </el-tabs>
         </template>
@@ -31,7 +33,28 @@ export default {
   data () {
     return {
       activeName: 'second',
-      isCollapse: true
+      isCollapse: true,
+      taskDetail: [{
+        id: '1',
+        title: '资料收取与查询',
+        type: 'text',
+        content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat'
+      }, {
+        id: '2',
+        title: '成员',
+        type: 'participation',
+        memberData: {
+          userGroup: [{
+            id: '1',
+            name: 'Eugene',
+            imgUrl: 'img_eugene_32@3x.png'
+          }, {
+            id: '2',
+            name: 'Job',
+            imgUrl: 'img_eugene_32@3x.png'
+          }]
+        }
+      }]
     }
   },
   methods: {
@@ -43,4 +66,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.el-tabs {
+    height: 100%;
+}
 </style>
