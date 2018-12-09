@@ -1,5 +1,8 @@
 <template>
     <div class="box_wrap">
+        <div class="top_tools">
+          <add-card @select="addProgramHandle"/>
+        </div>
         <card
         v-for="item in lawsuitData"
         :key="item.id"
@@ -17,11 +20,12 @@
 </template>
 
 <script>
-import { card } from './compoents'
+import { card, AddCard } from './compoents'
 export default {
   name: 'Lawsuit',
   components: {
-    card
+    card,
+    AddCard
   },
   data () {
     return {
@@ -38,6 +42,38 @@ export default {
   methods: {
     cardClickHandle (id) {
       this.$router.push(`/dashboard/foo/detail/${id}`)
+    },
+    addProgramHandle () {
+      const h = this.$createElement
+      this.$msgbox({
+        titls: '消息',
+        message:  h('p', null, [
+          h('span', null, '内容'),
+          h('i', { style: 'color: teal' }, 'VNode')
+        ]),
+        showCancelButton: true,
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        beforeClose: (action, instance, done) => {
+          if (action == 'confirm') {
+            instance.confirmButtonLoading = true
+            instance.confirmButtonText = '执行中...'
+            setTimeout(() => {
+              done()
+              setTimeout(() => {
+                instance.confirmButtonLoading = false
+              }, 300)
+            }, 3000)
+          } else {
+            done()
+          }
+        }
+      }).then(action => {
+        this.$message({
+          type: 'info',
+          message: 'action: ' + action
+        })
+      })
     }
   }
 }

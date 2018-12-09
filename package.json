@@ -2,7 +2,7 @@
   "name": "vue-legislation",
   "version": "1.0.0",
   "description": "A Vue.js project",
-  "author": "",
+  "author": "Eugene, 714284150@qq.com",
   "private": true,
   "scripts": {
     "dev": "cross-env BABEL_ENV=development webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
