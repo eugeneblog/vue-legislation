@@ -7,12 +7,14 @@ Vue.use(Router)
 
 export const constantRouterMap = [
   {
-    path: '/dashboard/:id',
+    path: '',
+    redirect: 'calenDar',
     component: Layout,
     children: [{
       path: 'calenDar',
       name: 'CalenDar',
-      component: () => import('@/views/calendar/CalenDar.vue')
+      component: () => import('@/views/calendar/CalenDar.vue'),
+      meta: { title: 'calenDar', icon: 'dashboard', noCache: true }
     }, {
       path: 'lawsuit', // 诉讼
       name: 'Lawsuit',
@@ -29,9 +31,6 @@ export const constantRouterMap = [
       path: 'setting',
       name: 'Setting',
       component: () => import('@/views/setting/Setting')
-    }, {
-      path: 'detail/:id',
-      component: () => import('@/views/detail/Detail')
     }]
   },
   {
@@ -43,6 +42,15 @@ export const constantRouterMap = [
     path: '/register',
     component: () => import('@/views/register/index'),
     hidden: true
+  },
+  {
+    path: '/redirect',
+    component: Layout,
+    children: [{
+      path: '/redirect/:path*',
+      name: 'Lawsuit',
+      component: () => import('@/views/detail/Detail')
+    }]
   }
 ]
 

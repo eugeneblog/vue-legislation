@@ -78,7 +78,16 @@ export default {
       labelPosition: 'right',
       loading: false,
       showDialog: false,
-      passwordType: 'password'
+      passwordType: 'password',
+      redirect: undefined
+    }
+  },
+  watch: {
+    $route: {
+      handler: function (route) {
+        this.redirect = route.query && route.query.redirect
+      },
+      immediate: true
     }
   },
   methods: {
@@ -86,9 +95,9 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('LoginByUserName', this.loginForm).then(() => {
+          this.$store.dispatch('LoginByUserName', this.loginForm).then(() => { // 传入用户名密码，触发loginByUserName
             this.loading = false
-            this.$router.push('/dashboard/foo/calenDar')
+            this.$router.push({ path: this.redirect || '/' })
           }).catch(() => {
             this.loading = false
           })

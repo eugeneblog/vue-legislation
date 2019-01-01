@@ -22,11 +22,9 @@
                 <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
               </template>
               <router-link to="/dashboard/foo/setting">
-                <el-menu-item divided @select="handleLogOut" index="2-4-1">个人中心</el-menu-item>
+                <el-menu-item divided index="2-4-1">个人中心</el-menu-item>
               </router-link>
-              <router-link to="/login">
-                <el-menu-item divided @select="handleLogOut" index="2-4-2">退出登陆</el-menu-item>
-              </router-link>
+              <el-menu-item divided @click="handleLogOut" index="2-4-2">退出登陆</el-menu-item>
           </el-submenu>
         </el-menu>
       </div>
@@ -78,11 +76,11 @@ export default {
   methods: {
     handleSelect (key, keyPath) {
       const list = this.list
-      this.$router.push(`/dashboard/foo/${list[key - 1].link}`)
+      this.$router.push(`/${list[key - 1].link}`)
     },
     handleLogOut (key, keyPath) {
-      this.$store.dispatch('LogOut').then(() => {
-        location.reload()// In order to re-instantiate the vue-router object to avoid bugs
+      this.$store.dispatch('LoginOut').then(() => {
+        location.reload() // In order to re-instantiate the vue-router object to avoid bugs
       })
     }
   }

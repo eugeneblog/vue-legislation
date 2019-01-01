@@ -6,9 +6,11 @@
           :key="item.id"
           >
               <template slot="title">
-              {{ item.title }}<i class="header-icon el-icon-info"></i>
+              {{ item.label }}
+              <!-- <i class="header-icon el-icon-info"></i> -->
               </template>
               <div>
+                <!-- <el-button @click="addRecordHandle" type="text" icon="el-icon-plus">添加新记录</el-button> -->
                 <member :memberType="item.type" :memberData="item"/>
               </div>
           </el-collapse-item>
@@ -25,6 +27,11 @@ export default {
   },
   props: {
     collapseData: Array
+  },
+  methods: {
+    addRecordHandle () {
+      console.log('add record')
+    }
   }
 }
 </script>

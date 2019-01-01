@@ -1,6 +1,7 @@
 <script>
 import ListItem from './components/ListItem.vue'
 import Participation from './components/Participation.vue'
+import Recor from './components/Recor.vue'
 export default {
   name: 'Member',
   props: {
@@ -10,20 +11,48 @@ export default {
   methods: {
     nativeSelctHandle () {
       alert('aa')
+    },
+    addRecordHandle (val) {
+      this.$prompt('', '创建阶段记录', {
+        confirmButtonText: '发布',
+        cancelButtonText: '取消',
+        inputPattern: /^\S+/,
+        inputErrorMessage: '记录格式不正确'
+      }).then(({ value }) => {
+        this.createNewRecor(value, val)
+        this.$message({
+          type: 'success',
+          message: '创建记录: ' + value
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消输入'
+        })
+      })
+    },
+    createNewRecor (val, o) { // 创建记录
+      o.record.push({
+        id: o.record.length,
+        text: val
+      })
     }
   },
   render (h) {
     let _this = this
     let isMemberType = function (val, data) { // 判断组件类型
       if (val === 'text') {
-        let _default = {
-          content: data.content || '内容丢失了，刷新试试'
-        }
         return h('div',
           {
             'class': 'member_text'
           },
-          _default.content
+          [
+            h(Recor, {
+              props: {
+                tableData: data.record
+              }
+            })
+          ]
         )
       } else if (val === 'participation') { // 增删成员 组件
         return h(
@@ -32,7 +61,7 @@ export default {
               particData: data.memberData || ''
             },
             on: {
-              addrole: _this.nativeSelctHandle
+              addrole: _this.nativeSelctHandle()
             }
           }
         )
@@ -51,7 +80,21 @@ export default {
         'class': 'member_wrap'
       },
       [
-        isMemberType(this.memberType, this.memberData)
+        h('el-button',
+          {
+            props: {
+              type: 'text',
+              icon: 'el-icon-plus'
+            },
+            on: {
+              click: function () {
+                _this.addRecordHandle(_this.memberData)
+              }
+            }
+          },
+          ['添加新记录']
+        ),
+        isMemberType(_this.memberType, _this.memberData)
       ]
     )
   }
@@ -61,5 +104,8 @@ export default {
 <style lang="scss" scoped>
 .member_wrap {
   background: #fff;
+}
+.el-message-box {
+  width: 40%;
 }
 </style>

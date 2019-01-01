@@ -130,8 +130,9 @@ export default {
   /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
   $bg:#283443;
-  $light_gray:#eee;
+  $light_gray: #959CA5;
   $cursor: #fff;
+  $border: #E2E6ED;
 
   @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
     .login-container .el-input input{
@@ -164,17 +165,17 @@ export default {
       }
     }
     .el-form-item {
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      background: rgba(0, 0, 0, 0.1);
+      border: 1px solid $border;
+      background: none;
       border-radius: 5px;
-      color: #454545;
+      color: #ffffff;
     }
   }
 </style>
 <style rel="stylesheet/scss" lang="scss">
     $bg:#2d3a4b;
     $dark_gray:#889aa4;
-    $light_gray:#eee;
+    $light_gray:#55595E;
 
     .login-container {
     position: fixed;
@@ -192,7 +193,7 @@ export default {
         }
         .tips {
             font-size: 14px;
-            color: #fff;
+            color: #55595E;
             margin: 15px 0px;
             span {
                 text-align: center;
@@ -219,7 +220,7 @@ export default {
             color: $light_gray;
             margin: 0px auto 40px auto;
             text-align: center;
-            font-weight: bold;
+            font-weight: 300;
             }
             .set-language {
             color: #fff;

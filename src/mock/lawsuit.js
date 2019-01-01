@@ -1,3 +1,4 @@
+import { param2Obj } from '@/utils'
 const lawsuitData = [{
   id: '1',
   title: '清华非洲学生骗中国女友600万被判14年：驱逐出境',
@@ -11,7 +12,41 @@ const lawsuitData = [{
   footer: {
     evolve: '拍板完成',
     sponsor: '无'
-  }
+  },
+  task: [
+    {
+      id: 1,
+      label: '和解谈判',
+      stage: 2,
+      type: 'text',
+      iconClass: '',
+      record: [{
+        id: '1',
+        date: '2018-12-24',
+        text: '记录一'
+      }, {
+        id: '2',
+        date: '2018-12-24',
+        text: '记录二'
+      }]
+    }, {
+      id: 2,
+      label: '立案准备',
+      stage: 1,
+      type: 'text',
+      iconClass: '',
+      record: []
+    }, {
+      id: 3,
+      label: '财产保全',
+      type: 'text',
+      stage: 3,
+      iconClass: '',
+      record: []
+    }
+  ],
+  case: {}, // 案情
+  files: {}
 }, {
   id: '2',
   title: '清华非洲学生骗中国女友600万被判14年：驱逐出境',
@@ -25,7 +60,33 @@ const lawsuitData = [{
   footer: {
     evolve: '拍板完成',
     sponsor: '无'
-  }
+  },
+  task: [
+    {
+      id: 1,
+      label: '阶段一',
+      stage: 2,
+      type: 'text',
+      iconClass: '',
+      record: []
+    }, {
+      id: 2,
+      label: '阶段二',
+      type: 'text',
+      stage: 1,
+      iconClass: '',
+      record: []
+    }, {
+      id: 3,
+      label: '阶段三',
+      stage: 3,
+      type: 'text',
+      iconClass: '',
+      record: []
+    }
+  ],
+  case: {}, // 案情
+  files: {}
 }]
 
 export default {
@@ -34,5 +95,31 @@ export default {
     if (token) {
       return lawsuitData
     }
+  },
+  createLawsuitProgram: config => {
+    let data = JSON.parse(config.body)
+    if (data) {
+      console.log(data.val)
+      let o = {
+        id: '3',
+        title: data.val.caseName,
+        state: data.val.status ? '完成' : '完成',
+        addition: {
+          data: new Date(),
+          linkman: 'Mr.Zhang',
+          phone: data.val.phone
+        },
+        context: 'asfafasdf',
+        footer: {
+          evolve: data.val.status ? '完成' : '完成',
+          sponsor: '无'
+        }
+      }
+      return o
+    }
+  },
+  searchLawsuitData: config => {
+    const { id } = param2Obj(config.url)
+    return lawsuitData[id]
   }
 }

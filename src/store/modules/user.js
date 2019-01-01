@@ -16,8 +16,8 @@ const user = {
     }
   },
   mutations: {
-    SET_TOKEN: (state, code) => {
-      state.code = code
+    SET_TOKEN: (state, token) => {
+      state.token = token
     },
     SET_ROLES: (state, roles) => {
       state.roles = roles
@@ -33,7 +33,7 @@ const user = {
     }
   },
   actions: {
-    LoginByUserName ({ commit }, userInfo) {
+    LoginByUserName ({ commit, state }, userInfo) {
       const username = userInfo.username.trim()
       return new Promise((resolve, reject) => {
         loginByUserName(username, userInfo.password).then(response => {
@@ -48,11 +48,12 @@ const user = {
         })
       })
     },
-    GetUserInfo ({ commit }, state) {
+    GetUserInfo ({ commit, state }) {
       return new Promise((resolve, reject) => {
+        console.log(state.token)
         getUserInfo(state.token).then(response => {
           if (!response.data) {
-            reject(new Error('error'))
+            reject(new Error('error: please check '))
           }
           const data = response.data
 
@@ -70,7 +71,7 @@ const user = {
         })
       })
     },
-    LogOut ({ commit, state }) {
+    LoginOut ({ commit, state }) {
       return new Promise((resolve, reject) => {
         loginOut(state.token).then(() => {
           commit('SET_TOKEN', '')
