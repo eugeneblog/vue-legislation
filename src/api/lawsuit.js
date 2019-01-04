@@ -1,8 +1,9 @@
 import request from '@/utils/request'
 
-export function GetLawsuitData (token) {
+export function GetLawsuitData (token, type) {
   const data = {
-    token
+    token,
+    type
   }
   return request({
     url: '/lawsuit/lawsuit',

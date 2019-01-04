@@ -21,6 +21,7 @@
 
 <script>
 import { card, AddCard, AddCardForm } from './compoents'
+import Vue from 'vue'
 export default {
   name: 'Lawsuit',
   components: {
@@ -120,7 +121,7 @@ export default {
     }
   },
   beforeCreate () {
-    this.$store.dispatch('getLawsuitData').then(data => {
+    this.$store.dispatch('getLawsuitData', 'lawsuit').then(data => {
       this.lawsuitData = data
     }).catch(err => {
       console.log(err)
@@ -141,7 +142,8 @@ export default {
         title: '新建项目',
         message: h(AddCardForm, {
           props: {
-            fromData: this.addCardFormData
+            fromData: this.addCardFormData,
+            refName: 'addCardForm'
           }
         }),
         showCancelButton: false,
@@ -150,23 +152,32 @@ export default {
         closeOnClickModal: false,
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
-            this.addProgramOkHandle()
-            instance.confirmButtonLoading = true
-            instance.confirmButtonText = '执行中...'
-            setTimeout(() => {
-              done()
-              setTimeout(() => {
-                instance.confirmButtonLoading = false
-              }, 300)
-            }, 3000)
+            Vue.$bus.refs.addCardForm.validate((valid) => {
+              if (valid) {
+                this.addProgramOkHandle()
+                instance.confirmButtonLoading = true
+                instance.confirmButtonText = '执行中...'
+                setTimeout(() => {
+                  done()
+                  setTimeout(() => {
+                    instance.confirmButtonLoading = false
+                  }, 300)
+                }, 1000)
+              } else {
+                this.$message({
+                  type: 'warning',
+                  message: '请检查项目信息是否正确'
+                })
+              }
+            })
           } else {
             done()
           }
         }
       }).then(action => {
         this.$message({
-          type: 'info',
-          message: 'action: ' + action
+          type: 'success',
+          message: '成功新增项目'
         })
       })
     }

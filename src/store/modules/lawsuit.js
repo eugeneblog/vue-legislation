@@ -6,13 +6,15 @@ let token = getToken()
 const lawsuit = {
   state: {
     lawsuitData: [],
+    perennialData: [],
+    specialData: [],
     addFormData: {},
     detailData: null
   },
   actions: {
-    getLawsuitData ({ commit, state }) {
+    getLawsuitData ({ commit, state }, type) {
       return new Promise((resolve, reject) => {
-        GetLawsuitData(token).then(response => {
+        GetLawsuitData(token, type).then(response => {
           let data = response.data
           commit('SET_LAWSUITDATA', data)
           resolve(data)
@@ -25,7 +27,6 @@ const lawsuit = {
       return new Promise((resolve, reject) => {
         GetLawsuitDataDetail(id).then(response => {
           let data = response.data
-          console.log(data)
           resolve(data)
         }).catch(error => {
           reject(error)

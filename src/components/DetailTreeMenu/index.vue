@@ -20,7 +20,6 @@
                 width="160"
                 title="参与人数1"
                 v-model="visibleUser">
-                  <el-input style="margin-bottom: 14px;" type="text" placeholder="请输入阶段名称" v-model="addNodeValue"></el-input>
                   <el-button slot="reference">
                     <svg-icon icon-class="icon_users" />
                   </el-button>
@@ -69,7 +68,11 @@ export default {
         this.menuData.push({
           id: this.menuData.length + 1,
           iconClass: '',
-          label: this.form.nodeName
+          label: this.form.nodeName,
+          record: [],
+          title: this.form.nodeName,
+          type: 'text',
+          stage: 1
         })
         this.isVerify = false
         this.visible2 = false

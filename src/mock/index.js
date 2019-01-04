@@ -14,5 +14,6 @@ Mock.mock(/\/calendar\/delSchedule/, 'get', calendarAPI.delschedule)
 Mock.mock(/\/lawsuit\/lawsuit/, 'post', lawsuitAPI.sendLawsuitData)
 Mock.mock(/\/lawsuit\/create_lawsuit/, 'post', lawsuitAPI.createLawsuitProgram)
 Mock.mock(/\/api\/lawsuit\/seachLawsuit/, 'get', lawsuitAPI.searchLawsuitData)
+Mock.mock(/\/lawsuit\/create_tasknode/, 'post', lawsuitAPI.createStage)
 
 export default Mock
