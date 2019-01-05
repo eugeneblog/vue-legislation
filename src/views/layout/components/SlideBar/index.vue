@@ -5,12 +5,18 @@
             <router-link to="/dashboard/foo/calenDar"><img src="../../../../assets/logo/logo@3x.png" alt="律链"></router-link>
         </div>
         <el-menu
-        class="list-menu"
+        class="navbar-menu"
         :default-active="select_navbar"
         mode="horizontal"
         @select="handleSelect"
         >
-          <SlideBarItem :list = "list"/>
+          <el-menu-item
+          :index="item.id"
+          v-for="(item) in list"
+          :key="item.id"
+          >
+            {{ item.text }}
+          </el-menu-item>
         </el-menu>
         <el-menu
         class="tool-menu"
@@ -88,9 +94,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  // .list-menu{
-  //   float: left;
-  // }
   .navbar-wrapper {
       position: fixed;
       width: 100%;
@@ -100,7 +103,12 @@ export default {
       background: #fff;
     .navbar-menuBox {
       background: #fff;
+      .navbar-menu {
+        float: left;
+      }
       .navbar-logo {
+        height: 68px;
+        float: left;
         a {
           float: left;
           margin-right: 20px;

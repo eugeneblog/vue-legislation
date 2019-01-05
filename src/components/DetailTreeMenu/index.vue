@@ -18,8 +18,24 @@
                 <el-popover
                 placement="right"
                 width="160"
-                title="参与人数1"
+                title="参与人数"
                 v-model="visibleUser">
+                  <div class="usergroup-item">
+                    <ul>
+                      <li>
+                        <div>
+                          <img src="static/usergroup/img_eugene_32@3x.png" alt="">
+                          <div class="usergroup-item-username"><a>张律师</a></div>
+                        </div>
+                      </li>
+                      <li>
+                        <div>
+                          <img src="static/usergroup/img_eugene_32@3x.png" alt="">
+                          <div class="usergroup-item-username"><a>张律师</a></div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
                   <el-button slot="reference">
                     <svg-icon icon-class="icon_users" />
                   </el-button>
@@ -118,5 +134,31 @@ export default {
 .isCorrect {
   border: 1px solid rgb(255, 47, 0);
   border-radius: 5px;
+}
+.usergroup-item {
+  line-height: 40px;
+  ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    li {
+      padding-bottom: 10px;
+      img {
+        height: 40px;
+        float: left;
+      }
+      usergroup-item-username {
+        display: block;
+        float: left;
+        text-align: center;
+        line-height: 40px;
+        a {
+          display: block;
+          padding-left: 40px;
+          line-height: 40px;
+        }
+      }
+    }
+  }
 }
 </style>

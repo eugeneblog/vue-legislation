@@ -46,7 +46,36 @@ let lawsuitData = [{
         record: []
         }
     ],
-    case: {}, // 案情
+    case: [{
+      id: '1',
+      title: '基础信息',
+      context: [{
+        id: '1',
+        iconClass: '',
+        name: '联系人',
+        value: '王五'
+      }, {
+        id: '2',
+        iconClass: '',
+        name: '电话',
+        value: '17301193803'
+      }, {
+        id: '3',
+        iconClass: '',
+        name: '案件名称',
+        value: '诉讼项目一'
+      }, {
+        id: '4',
+        iconClass: '',
+        name: '案由',
+        value: '交通事故纠纷'
+      }, {
+        id: '5',
+        iconClass: '',
+        name: '来源',
+        value: '北京'
+      }]
+    }], // 案情
     files: {}
     }, {
     id: '2',

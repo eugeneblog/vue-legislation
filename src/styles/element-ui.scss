@@ -84,22 +84,20 @@
 //from
 
 .el-menu--horizontal {
-  & > .headerBox {
-    & > .el-menu-item {
-      float: left;
-      height: 60px;
-      line-height: 60px;
-      margin: 0;
-      border-bottom: 2px solid transparent;
-      color: #909399;
-      &.is-active {
-        border-bottom: 2px solid #409eff;
-        color: #303133;
-      }
+  & > .el-menu-item {
+    float: left;
+    height: 60px;
+    line-height: 60px;
+    margin: 0;
+    border-bottom: 2px solid transparent;
+    color: #909399;
+    &.is-active{
+      border-bottom: 1px solid #fff;
+      color: #303133;
     }
-    & > .el-submenu {
-      float: left;
-    }
+  }
+  & > .el-submenu {
+    float: left;
   }
   .el-submenu {
     .el-submenu__icon-arrow {
@@ -134,7 +132,7 @@
   border-bottom: 1px solid white;
   background: none;
 }
-.el-menu--horizontal > .headerBox > .el-menu-item.is-active::after {
+.el-menu--horizontal > .el-menu-item.is-active::after {
   content: '';
   position: relative;
   top: -3px;

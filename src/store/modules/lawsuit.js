@@ -1,7 +1,4 @@
-import { GetLawsuitData, CreateNewProgram, CreateNewNode, GetLawsuitDataDetail } from '@/api/lawsuit.js'
-import { getToken } from '@/utils/auth'
-
-let token = getToken()
+import { GetLawsuitData, CreateNewProgram, CreateNewNode, GetLawsuitDataDetail, GetProgramCase } from '@/api/lawsuit.js'
 
 const lawsuit = {
   state: {
@@ -14,7 +11,7 @@ const lawsuit = {
   actions: {
     getLawsuitData ({ commit, state }, type) {
       return new Promise((resolve, reject) => {
-        GetLawsuitData(token, type).then(response => {
+        GetLawsuitData(type).then(response => {
           let data = response.data
           commit('SET_LAWSUITDATA', data)
           resolve(data)
@@ -26,6 +23,16 @@ const lawsuit = {
     getProgramDetail ({ commit, state }, id) {
       return new Promise((resolve, reject) => {
         GetLawsuitDataDetail(id).then(response => {
+          let data = response.data
+          resolve(data)
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+    getProgramCase ({ commit, state }, id) {
+      return new Promise((resolve, reject) => {
+        GetProgramCase(id).then(response => {
           let data = response.data
           resolve(data)
         }).catch(error => {

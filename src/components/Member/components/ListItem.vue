@@ -1,7 +1,7 @@
 <template>
     <div>
-      <div>
-       {{ listData.content }}
+      <div v-for="item in listData" :key="item.id">
+        {{ item.name + ' : ' + item.value }}
       </div>
     </div>
 </template>
@@ -10,7 +10,7 @@
 export default {
   name: 'ListItem',
   props: {
-    listData: Object
+    listData: Array
   }
 }
 </script>

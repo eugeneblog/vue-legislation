@@ -1,8 +1,7 @@
 import request from '@/utils/request'
 
-export function GetLawsuitData (token, type) {
+export function GetLawsuitData (type) {
   const data = {
-    token,
     type
   }
   return request({
@@ -34,6 +33,14 @@ export function CreateNewNode (val) {
 export function GetLawsuitDataDetail (id) {
   return request({
     url: '/api/lawsuit/seachLawsuit',
+    method: 'get',
+    params: { id }
+  })
+}
+
+export function GetProgramCase (id) {
+  return request({
+    url: '/api/lawsuit/seachProgram/casedetail',
     method: 'get',
     params: { id }
   })

@@ -34,7 +34,7 @@ export default {
       this.$router.push(`/redirect/${id}`)
     }
   },
-  beforeCreate () {
+  mounted () {
     this.$store.dispatch('getLawsuitData', 'special').then(data => {
       this.specialData = data
       console.log(data)

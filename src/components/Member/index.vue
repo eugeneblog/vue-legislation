@@ -6,7 +6,7 @@ export default {
   name: 'Member',
   props: {
     memberType: String, // 接受参数，决定选择使用哪个子组件
-    memberData: Object
+    memberData: ''
   },
   methods: {
     nativeSelctHandle () {
@@ -42,18 +42,37 @@ export default {
     let _this = this
     let isMemberType = function (val, data) { // 判断组件类型
       if (val === 'text') {
-        return h('div',
-          {
-            'class': 'member_text'
-          },
-          [
-            h(Recor, {
+        return [
+          h(
+            'el-button', {
               props: {
-                tableData: data.record
+                type: 'text', icon: 'el-icon-plus'
+              },
+              on: {
+                click: function () {
+                  _this.addRecordHandle(_this.memberData)
+                }
               }
-            })
-          ]
-        )
+            },
+            ['添加新记录']
+          ),
+          h(
+            'div',
+            {
+              'class': 'member_text'
+            },
+            [
+              h(
+                Recor,
+                {
+                  props: {
+                    tableData: data.record
+                  }
+                }
+              )
+            ]
+          )
+        ]
       } else if (val === 'participation') { // 增删成员 组件
         return h(
           Participation, {
@@ -66,10 +85,11 @@ export default {
           }
         )
       } else if (val === 'list') {
+        console.log(data)
         return h(
           ListItem, {
             props: {
-              listData: data.memberData || ''
+              listData: data.context || ''
             }
           }
         )
@@ -80,20 +100,6 @@ export default {
         'class': 'member_wrap'
       },
       [
-        h('el-button',
-          {
-            props: {
-              type: 'text',
-              icon: 'el-icon-plus'
-            },
-            on: {
-              click: function () {
-                _this.addRecordHandle(_this.memberData)
-              }
-            }
-          },
-          ['添加新记录']
-        ),
         isMemberType(_this.memberType, _this.memberData)
       ]
     )

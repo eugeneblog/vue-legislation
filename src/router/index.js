@@ -48,7 +48,6 @@ export const constantRouterMap = [
     component: Layout,
     children: [{
       path: '/redirect/:path*',
-      name: 'Lawsuit',
       component: () => import('@/views/detail/Detail')
     }]
   }

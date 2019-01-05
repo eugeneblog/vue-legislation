@@ -16,9 +16,37 @@
                     </el-container>
                 </el-tab-pane>
                 <el-tab-pane label="案情" name="second">
-                  <detail-collapse></detail-collapse>
+                  <detail-collapse :collapseData="caseDetail"></detail-collapse>
                 </el-tab-pane>
-                <el-tab-pane label="文件" name="third">文件</el-tab-pane>
+                <el-tab-pane label="文件" name="third">
+                  <el-table
+                  :data="files"
+                  >
+                    <el-button>上传文件</el-button>
+                    <el-table-column
+                    prop="date"
+                    label="日期"
+                    sortable
+                    column-key="date"
+                    >
+                    </el-table-column>
+                    <el-table-column
+                    prop="fileName"
+                    label="文件名"
+                    >
+                    </el-table-column>
+                    <el-table-column
+                    prop="updateMan"
+                    label="最近修改人"
+                    >
+                    </el-table-column>
+                    <el-table-column
+                    prop="fileSize"
+                    label="文件大小"
+                    >
+                    </el-table-column>
+                  </el-table>
+                </el-tab-pane>
             </el-tabs>
         </template>
     </div>
@@ -41,56 +69,25 @@ export default {
         children: 'children',
         label: 'label'
       },
-      task: [
-        {
-          id: 1,
-          label: '和解谈判',
-          title: '和解谈判',
-          stage: 2,
-          iconClass: '',
-          type: 'text',
-          record: [
-            {
-              id: '1',
-              text: '记录一'
-            }, {
-              id: '2',
-              text: '记录二'
-            }
-          ]
-        }, {
-          id: 2,
-          label: '立案准备',
-          stage: 1,
-          title: '立案准备',
-          iconClass: '',
-          type: 'text',
-          record: [
-            {
-              id: '1',
-              text: '记录二'
-            }
-          ]
-        }, {
-          id: 3,
-          label: '财产保全',
-          stage: 3,
-          title: '财产保全',
-          iconClass: '',
-          type: 'text',
-          record: [
-            {
-              id: '1',
-              text: '记录三'
-            }
-          ]
-        }
-      ]
+      id: '',
+      task: [],
+      caseDetail: [],
+      files: []
     }
   },
   methods: {
     handleClick (tab, event) {
-      console.log(tab, event)
+      if (tab.label === '案情') {
+        console.log('点击了案情')
+        // 发送ajax，获取案情
+        this.$store.dispatch('getProgramCase', this.id - 1).then(data => {
+          this.caseDetail = data
+        })
+      } else if (tab.label === '文件') {
+        this.$store.dispatch('getProgramFiles', this.id - 1).then(data => {
+          this.files = data
+        })
+      }
     },
     selectNodeHandel (data, o, node) {
       console.log(`点击了${o.data.label}`)
@@ -99,6 +96,7 @@ export default {
   activated () { // 由于app使用了keep-alive页面dom不会重新渲染，所以使用activated替换mounted钩子, deactivated替换destroy
     // 获取当前路由参数
     let id = this.$route.params.path
+    this.id = id
     // 根据id查找需要的数据, 获取treedata
     this.$store.dispatch('getProgramDetail', id - 1).then(data => {
       this.task = data.task

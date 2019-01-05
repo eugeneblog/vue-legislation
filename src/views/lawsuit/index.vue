@@ -120,7 +120,8 @@ export default {
       }]
     }
   },
-  beforeCreate () {
+  mounted () {
+    console.log('获取诉讼项目数据')
     this.$store.dispatch('getLawsuitData', 'lawsuit').then(data => {
       this.lawsuitData = data
     }).catch(err => {
