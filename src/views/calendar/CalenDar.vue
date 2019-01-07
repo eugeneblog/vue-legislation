@@ -2,7 +2,15 @@
     <div class="calendar_box">
         <div class="calendar_main" id="calendar">
         </div>
-        <calen-dar-dialog :closeOrdel="isCreate ? String('取消') : String('删除')" :updateOrCreate="isCreate ? String('创建') : String('修改')" :data="fromData"  :dialogTit="dialogTitle" @done="handleDone" @confirm="handleConfirm" @close = 'handleClose' :dialogFormVisible = "dialogFormVisible"/>
+        <calen-dar-dialog
+        :closeOrdel="isCreate ? String('取消') : String('删除')" :updateOrCreate="isCreate ? String('创建') : String('修改')"
+        :data="fromData"
+        :dialogTit="dialogTitle"
+        @done="handleDone"
+        @confirm="handleConfirm"
+        @close="handleClose"
+        :dialogFormVisible = "dialogFormVisible">
+        </calen-dar-dialog>
     </div>
 </template>
 <script>
@@ -32,6 +40,7 @@ export default {
   },
   methods: {
     showDialog (title, data) { // 显示dialog弹窗，接受表单数据
+      console.log(this.fromData)
       const fromData = this.fromData
       this.dialogFormVisible = true
       this.dialogTitle = title
@@ -74,6 +83,7 @@ export default {
       this.dialogFormVisible = false
     },
     createEvents (data) { // 创建eventSources
+      console.log($('#calendar').fullCalendar)
       $('#calendar').fullCalendar('addEventSource', [{
         title: data.scheduleTitle,
         start: data.showDevaultTime.startDay,
@@ -163,14 +173,14 @@ export default {
       nowIndicator: true,
       schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
       contentHeight: 600,
-      customButtons: {
-        myCustomButton: {
-          text: '自定义按钮',
-          click: function () {
-            alert('click')
-          }
-        }
-      },
+      // customButtons: {
+      //   myCustomButton: {
+      //     text: '自定义按钮',
+      //     click: function () {
+      //       alert('click')
+      //     }
+      //   }
+      // },
       header: {
         left: 'prev,next today myCustomButton',
         center: 'title',

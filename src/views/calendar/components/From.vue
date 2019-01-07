@@ -100,6 +100,9 @@ export default {
         return this.data.showDevaultTime
       }
     }
+  },
+  mounted () {
+    console.log(this.data)
   }
 }
 </script>
