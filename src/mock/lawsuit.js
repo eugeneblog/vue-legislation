@@ -77,7 +77,21 @@ let lawsuitData = [{
       value: '北京'
     }]
   }], // 案情
-  files: {}
+  files: [{
+    name: 'food.jpeg',
+    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
+    fileName: 'food.docx',
+    fileSize: '200kb',
+    date: '2019-1-11',
+    updateMan: 'Mr.Li'
+  }, {
+    name: 'food2.jpeg',
+    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
+    fileName: 'axios.xls',
+    fileSize: '300kb',
+    date: '2019-1-11',
+    updateMan: '张律师'
+  }]
 }, {
   id: '2',
   title: '常年项目一',
@@ -147,7 +161,21 @@ let lawsuitData = [{
       value: '北京'
     }]
   }], // 案情
-  files: {}
+  files: [{
+    name: 'food.jpeg',
+    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
+    fileName: 'food.docx',
+    fileSize: '200kb',
+    date: '2019-1-11',
+    updateMan: 'Mr.Li'
+  }, {
+    name: 'food2.jpeg',
+    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
+    fileName: 'axios.xls',
+    fileSize: '300kb',
+    date: '2019-1-11',
+    updateMan: '张律师'
+  }]
 }, {
   id: '3',
   title: '非诉项目',
@@ -210,7 +238,21 @@ let lawsuitData = [{
       value: '北京'
     }]
   }], // 案情
-  files: {}
+  files: [{
+    name: 'food.jpeg',
+    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
+    fileName: 'food.docx',
+    fileSize: '200kb',
+    date: '2019-1-11',
+    updateMan: 'Mr.Li'
+  }, {
+    name: 'food2.jpeg',
+    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
+    fileName: 'axios.xls',
+    fileSize: '300kb',
+    date: '2019-1-11',
+    updateMan: '张律师'
+  }]
 }]
 
 export default {
@@ -268,7 +310,37 @@ export default {
             iconClass: '',
             record: []
           }
-        ]
+        ],
+        case: [{
+          id: '1',
+          title: '基础信息',
+          item: [{
+            id: '1',
+            iconClass: '',
+            name: '联系人',
+            value: '王五'
+          }, {
+            id: '2',
+            iconClass: '',
+            name: '电话',
+            value: '17301193803'
+          }, {
+            id: '3',
+            iconClass: '',
+            name: '案件名称',
+            value: '诉讼项目一'
+          }, {
+            id: '4',
+            iconClass: '',
+            name: '案由',
+            value: '交通事故纠纷'
+          }, {
+            id: '5',
+            iconClass: '',
+            name: '来源',
+            value: '北京'
+          }]
+        }] // 案情
       }
       lawsuitData.push(o)
       return o
@@ -281,5 +353,9 @@ export default {
   searchLawsuitCases: config => {
     const { id } = param2Obj(config.url)
     return lawsuitData[id].case
+  },
+  searchProgramFiles: config => {
+    const { id } = param2Obj(config.url)
+    return lawsuitData[id].files
   }
 }

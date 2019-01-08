@@ -1,11 +1,18 @@
 <template>
     <div>
         <el-table
+        ref="multipleTable"
         :data="tableData"
+        tooltip-effect="dark"
         style="width: 100%"
         :stripe="false"
         :border="false"
+        @selection-change="handleSelectionChange"
         >
+            <el-table-column
+            type="selection"
+            width="55">
+            </el-table-column>
             <el-table-column
             fixed
             label="记录"
@@ -36,6 +43,13 @@ export default {
   methods: {
     deleteRow (index, rows) {
       rows.splice(index, 1)
+    },
+    handleSelectionChange (val) {
+      this.$notify({
+        title: '提示',
+        type: 'success',
+        message: '任务标记完成'
+      })
     }
   }
 }

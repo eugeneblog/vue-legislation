@@ -1,4 +1,4 @@
-import { GetLawsuitData, CreateNewProgram, CreateNewNode, GetLawsuitDataDetail, GetProgramCase } from '@/api/lawsuit.js'
+import { GetLawsuitData, CreateNewProgram, CreateNewNode, GetLawsuitDataDetail, GetProgramCase, GetProgramFiles } from '@/api/lawsuit.js'
 
 const lawsuit = {
   state: {
@@ -71,6 +71,16 @@ const lawsuit = {
     setPresent ({ commit, state }, id) {
       return new Promise((resolve, reject) => {
         GetLawsuitDataDetail(id).then(response => {
+          let data = response.data
+          resolve(data)
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+    getProgramFiles ({ commit, state }, id) {
+      return new Promise((resolve, reject) => {
+        GetProgramFiles(id).then(response => {
           let data = response.data
           resolve(data)
         }).catch(error => {

@@ -45,3 +45,11 @@ export function GetProgramCase (id) {
     params: { id }
   })
 }
+
+export function GetProgramFiles (id) {
+  return request({
+    url: '/api/lawsuit/seachProgramFiles',
+    method: 'get',
+    params: { id }
+  })
+}

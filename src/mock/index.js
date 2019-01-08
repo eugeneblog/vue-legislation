@@ -16,5 +16,6 @@ Mock.mock(/\/lawsuit\/create_lawsuit/, 'post', lawsuitAPI.createLawsuitProgram)
 Mock.mock(/\/api\/lawsuit\/seachLawsuit/, 'get', lawsuitAPI.searchLawsuitData)
 Mock.mock(/\/lawsuit\/create_tasknode/, 'post', lawsuitAPI.createStage)
 Mock.mock(/\/api\/lawsuit\/seachProgram\/casedetail/, 'get', lawsuitAPI.searchLawsuitCases)
+Mock.mock(/\/api\/lawsuit\/seachProgramFiles/, 'get', lawsuitAPI.searchProgramFiles)
 
 export default Mock

@@ -19,10 +19,10 @@
                   <detail-collapse :collapseData="caseDetail"></detail-collapse>
                 </el-tab-pane>
                 <el-tab-pane label="文件" name="third">
+                  <uploads/>
                   <el-table
-                  :data="files"
+                  :data="filelist"
                   >
-                    <el-button>上传文件</el-button>
                     <el-table-column
                     prop="date"
                     label="日期"
@@ -55,11 +55,13 @@
 <script>
 import DetailMenu from '@/components/DetailTreeMenu/index.vue'
 import DetailCollapse from '@/components/DetailCollapse/index.vue'
+import Uploads from '@/components/Upload/index.vue'
 export default {
   name: 'Detail',
   components: {
     DetailMenu,
-    DetailCollapse
+    DetailCollapse,
+    Uploads
   },
   data () {
     return {
@@ -72,7 +74,7 @@ export default {
       id: '',
       task: [],
       caseDetail: [],
-      files: []
+      filelist: []
     }
   },
   methods: {
@@ -85,7 +87,8 @@ export default {
         })
       } else if (tab.label === '文件') {
         this.$store.dispatch('getProgramFiles', this.id - 1).then(data => {
-          this.files = data
+          this.filelist = data
+          console.log(this.filelist)
         })
       }
     },
@@ -107,6 +110,6 @@ export default {
 
 <style lang="scss" scoped>
 .el-tabs {
-    height: 100%;
+  height: 100%;
 }
 </style>
