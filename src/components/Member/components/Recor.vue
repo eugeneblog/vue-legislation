@@ -11,6 +11,7 @@
         >
             <el-table-column
             type="selection"
+            @select="selectHandle"
             width="55">
             </el-table-column>
             <el-table-column
@@ -37,6 +38,12 @@
 <script>
 export default {
   name: 'Recor',
+  data () {
+    return {
+      multipleSelection: [],
+      selectionRows: []
+    }
+  },
   props: {
     tableData: Array
   },
@@ -44,12 +51,13 @@ export default {
     deleteRow (index, rows) {
       rows.splice(index, 1)
     },
-    handleSelectionChange (val) {
-      this.$notify({
-        title: '提示',
-        type: 'success',
-        message: '任务标记完成'
-      })
+    handleSelectionChange (rows) {
+      // 发送ajax请求，标记完成任务
+      this.multipleSelection = rows
+      console.log(rows)
+    },
+    selectHandle (s, row) {
+      console.log(s, row)
     }
   }
 }

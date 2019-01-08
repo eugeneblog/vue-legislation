@@ -24,11 +24,13 @@ let lawsuitData = [{
       record: [{
         id: '1',
         date: '2018-12-24',
-        text: '记录一'
+        text: '记录一',
+        accomplish: false
       }, {
         id: '2',
         date: '2018-12-24',
-        text: '记录二'
+        text: '记录二',
+        accomplish: false
       }]
     }, {
       id: 2,

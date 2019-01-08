@@ -45,6 +45,13 @@
                     label="文件大小"
                     >
                     </el-table-column>
+                    <el-table-column
+                    label="操作"
+                    >
+                      <template slot-scope="scope">
+                        <el-button size="mini" type="primary" @click="downloadFilesHandle(scope.$row)"  v-loading.fullscreen.lock="fullscreenLoading">下载</el-button>
+                      </template>
+                    </el-table-column>
                   </el-table>
                 </el-tab-pane>
             </el-tabs>
@@ -74,7 +81,8 @@ export default {
       id: '',
       task: [],
       caseDetail: [],
-      filelist: []
+      filelist: [],
+      fullscreenLoading: false
     }
   },
   methods: {
@@ -94,6 +102,12 @@ export default {
     },
     selectNodeHandel (data, o, node) {
       console.log(`点击了${o.data.label}`)
+    },
+    downloadFilesHandle (url) {
+      this.fullscreenLoading = true
+      setTimeout(() => {
+        this.fullscreenLoading = false
+      }, 2000)
     }
   },
   activated () { // 由于app使用了keep-alive页面dom不会重新渲染，所以使用activated替换mounted钩子, deactivated替换destroy
