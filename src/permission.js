@@ -15,8 +15,8 @@ router.beforeEach((to, from, next) => {
       if (store.getters.roles.length === 0) {
         // 重新拉取user_info
         store.dispatch('GetUserInfo').then(res => {
-          const roles = res.data
-          console.log(roles)
+          const userdata = res.data
+          store.dispatch('getLawsuitDataInfo', userdata.name) // 拉取用户项目列表
         }).catch((err) => {
           console.log(err)
           next({ path: '/' })

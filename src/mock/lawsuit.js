@@ -345,7 +345,7 @@ export default {
         }] // 案情
       }
       lawsuitData.push(o)
-      return o
+      return { data: o, message: `成功新增一个${data.val.businessType}项目`, status: 1 }
     }
   },
   searchLawsuitData: config => {
@@ -359,5 +359,11 @@ export default {
   searchProgramFiles: config => {
     const { id } = param2Obj(config.url)
     return lawsuitData[id].files
+  },
+  searchProgramAll: config => {
+    const { token } = param2Obj(config.url)
+    if (token) {
+      return lawsuitData
+    }
   }
 }

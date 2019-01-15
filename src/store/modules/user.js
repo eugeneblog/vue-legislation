@@ -6,7 +6,7 @@ const user = {
     status: '',
     code: '',
     token: getToken(),
-    name: '',
+    username: '',
     avatar: '',
     introduction: '',
     roles: [],
@@ -26,7 +26,7 @@ const user = {
       state.avatar = avatar
     },
     SET_NAME: (state, name) => {
-      state.name = name
+      state.username = name
     },
     SET_INTRODUCTION: (state, introduction) => {
       state.introduction = introduction
@@ -50,8 +50,7 @@ const user = {
     },
     GetUserInfo ({ commit, state }) {
       return new Promise((resolve, reject) => {
-        console.log(state.token)
-        getUserInfo(state.token).then(response => {
+        getUserInfo(state.token).then(response => { // 获取用户列表
           if (!response.data) {
             reject(new Error('error: please check '))
           }

@@ -4,6 +4,7 @@ import user from './modules/user'
 import calendar from './modules/calendar'
 import permission from './modules/permission'
 import lawsuit from './modules/lawsuit'
+import setting from './modules/setting'
 import getters from './getters'
 
 Vue.use(Vuex)
@@ -13,7 +14,8 @@ const store = new Vuex.Store({
     user,
     calendar,
     permission,
-    lawsuit
+    lawsuit,
+    setting
   },
   getters
 })

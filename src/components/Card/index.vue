@@ -4,7 +4,7 @@
             <el-col :span="24">
                 <el-card shadow="hover" class="card_items">
                     <div class="card_headerImg">
-                        <img src="../../../assets/card/Bitmap@3x.png" alt="">
+                        <img src="../../assets/card/Bitmap@3x.png" alt="">
                     </div>
                     <div class="card_content">
                         <div class="card_title">
@@ -31,7 +31,7 @@
 
 <script>
 export default {
-  name: 'card',
+  name: 'Card',
   props: {
     title: {
       type: String

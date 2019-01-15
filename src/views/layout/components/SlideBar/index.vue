@@ -18,6 +18,7 @@
             {{ item.text }}
           </el-menu-item>
         </el-menu>
+        <add-card class="addcard_box"></add-card>
         <el-menu
         class="tool-menu"
         :default-active="activeIndex"
@@ -39,6 +40,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import AddCard from '@/components/AddProgramBtn/AddCard.vue'
 import SlideBarItem from './SlideBarItem'
 export default {
   name: 'SlideBar',
@@ -69,7 +71,8 @@ export default {
     }
   },
   components: {
-    SlideBarItem
+    SlideBarItem,
+    AddCard
   },
   computed: {
     ...mapGetters([
@@ -103,6 +106,10 @@ export default {
       background: #fff;
     .navbar-menuBox {
       background: #fff;
+      .addcard_box {
+        line-height: 60px;
+        float: right;
+      }
       .navbar-menu {
         float: left;
       }

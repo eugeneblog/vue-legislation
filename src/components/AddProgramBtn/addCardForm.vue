@@ -1,27 +1,12 @@
 <script>
 import AddRole from '@/components/AddRole'
-import Vue from 'vue'
-import store from '@/store'
 export default {
   name: 'AddCardForm',
   // functional: true, // 开启之后render可以使用context对象参数, 开启之后render的this无法指向实例
   props: {
     fromData: Array,
-    refName: String
-  },
-  data () {
-    return {
-      form: {},
-      rules: {
-        caseName: [
-          { required: true, message: '请输入活动名称', trigger: 'blur' },
-          { min: 1, max: 12, message: '长度在 1 到 12 个字符', trigger: 'blur' }
-        ],
-        businessType: [
-          { required: true, message: '请选择业务类型', trigger: 'blur' }
-        ]
-      }
-    }
+    formModel: Object,
+    rules: Object
   },
   methods: {
     mapFromDataModel (data) {
@@ -40,11 +25,11 @@ export default {
       if (type === 'text') {
         return h('el-input', {
           props: {
-            value: self.form[data.name]
+            value: self.formModel[data.name]
           },
           on: {
             input: function (e) {
-              self.form[data.name] = e
+              self.formModel[data.name] = e
             }
           },
           attrs: {
@@ -59,11 +44,12 @@ export default {
           {
             props: {
               placeholder: data.placeholder,
-              value: self.form[data.name]
+              value: self.formModel[data.name]
             },
             on: {
               change: function (e) {
-                self.form[data.name] = e
+                self.formModel[data.name] = String(e)
+                console.log(self.formModel[data.name])
               }
             }
           },
@@ -84,7 +70,7 @@ export default {
       }
     }
     return (
-      <el-form ref={ this.refName } rules={ this.rules } model={ this.form } label-width="100px">
+      <el-form rules={ this.rules } model={ this.formModel } label-width="100px">
         {
           this.fromData.map((item, ind) => {
             return (
@@ -109,14 +95,6 @@ export default {
         }
       </el-form>
     )
-  },
-  mounted () {
-    Vue.$bus = {
-      refs: this.$refs
-    }
-    store.dispatch('setAddFormData', this.mapFromDataModel(this.fromData))
-    this.form = store.state.lawsuit.addFormData
-    console.log(this.form)
   }
 }
 </script>

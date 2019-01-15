@@ -1,19 +1,27 @@
-import { GetLawsuitData, CreateNewProgram, CreateNewNode, GetLawsuitDataDetail, GetProgramCase, GetProgramFiles } from '@/api/lawsuit.js'
+import { GetLawsuitData, CreateNewProgram, CreateNewNode, GetLawsuitDataDetail, GetProgramCase, GetProgramFiles, GetLawsuitDataInfo } from '@/api/lawsuit.js'
 
 const lawsuit = {
   state: {
     lawsuitData: [],
-    perennialData: [],
-    specialData: [],
-    addFormData: {},
     detailData: null
   },
   actions: {
+    getLawsuitDataInfo ({commit, state}, token) {
+      // 获取所有用户项目
+      return new Promise((resolve, reject) => {
+        GetLawsuitDataInfo(token).then(response => {
+          let data = response.data
+          commit('SET_LAWSUITDATA', data)
+          resolve(data)
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
     getLawsuitData ({ commit, state }, type) {
       return new Promise((resolve, reject) => {
         GetLawsuitData(type).then(response => {
           let data = response.data
-          commit('SET_LAWSUITDATA', data)
           resolve(data)
         }).catch(error => {
           reject(error)
@@ -50,9 +58,9 @@ const lawsuit = {
       // 发送ajax请求，后端保存数据
       return new Promise((resolve, reject) => {
         CreateNewProgram(data).then(response => { // 请求成功后更新项目列表
-          let data = response.data
-          commit('ADD_NEWFORMDATA', data)
-          resolve(data)
+          let responseData = response.data
+          commit('ADD_NEWFORMDATA', responseData.data)
+          resolve(responseData)
         }).catch(error => {
           reject(error)
         })

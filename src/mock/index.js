@@ -3,6 +3,7 @@ import loginAPI from './login'
 import registerAPI from './register'
 import calendarAPI from './calendar'
 import lawsuitAPI from './lawsuit'
+import settingAPI from './setting'
 
 Mock.mock(/\/login\/login/, 'post', loginAPI.loginByUserName)
 Mock.mock(/\/login\/logout/, 'post', loginAPI.logout)
@@ -17,5 +18,7 @@ Mock.mock(/\/api\/lawsuit\/seachLawsuit/, 'get', lawsuitAPI.searchLawsuitData)
 Mock.mock(/\/lawsuit\/create_tasknode/, 'post', lawsuitAPI.createStage)
 Mock.mock(/\/api\/lawsuit\/seachProgram\/casedetail/, 'get', lawsuitAPI.searchLawsuitCases)
 Mock.mock(/\/api\/lawsuit\/seachProgramFiles/, 'get', lawsuitAPI.searchProgramFiles)
+Mock.mock(/\/api\/user\/data/, 'get', settingAPI.searchUserData)
+Mock.mock(/\/api\/lawsuit\/search\/program/, 'get', lawsuitAPI.searchProgramAll)
 
 export default Mock

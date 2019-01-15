@@ -53,3 +53,11 @@ export function GetProgramFiles (id) {
     params: { id }
   })
 }
+
+export function GetLawsuitDataInfo (token) {
+  return request({
+    url: '/api/lawsuit/search/program',
+    method: 'get',
+    params: { token }
+  })
+}
